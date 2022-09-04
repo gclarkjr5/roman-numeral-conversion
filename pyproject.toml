@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "roman-numerals-conversion"
+version = "0.1.0"
+description = ""
+authors = ["Gary Clark <gclark@xccelerated.io>"]
+readme = "README.md"
+packages = [{include = "roman_numerals_conversion"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.3"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.1.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+roman_numerals = "roman_numerals_conversion.cli:convert_numerals"
