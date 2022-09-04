@@ -1,5 +1,3 @@
-
-
 one = {"roman_numeral": "I", "numeric": 1}
 five = {"roman_numeral": "V", "numeric": 5}
 ten = {"roman_numeral": "X", "numeric": 10}
@@ -7,7 +5,6 @@ fifty = {"roman_numeral": "L", "numeric": 50}
 one_hundred = {"roman_numeral": "C", "numeric": 100}
 five_hundred = {"roman_numeral": "D", "numeric": 500}
 thousand = {"roman_numeral": "M", "numeric": 1000}
-
 
 
 # convert each numeral into its number value
@@ -48,7 +45,7 @@ def convert(input):
 
         # for only one roman numeral
         if output_length == 1:
-            accumulator.append(number) 
+            accumulator.append(number)
         else:
             # when the numeral is more than 2 digits, we need to look ahead
 
@@ -63,13 +60,13 @@ def convert(input):
                     sub_value = next_number - number
                     accumulator.append(sub_value)
                     i += 1
-                else: # everything else is business as usual
+                else:  # everything else is business as usual
                     accumulator.append(number)
 
         i += 1
 
     return sum(accumulator)
-       
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     convert()

@@ -1,10 +1,12 @@
 from roman_numerals_conversion.roman_numerals import convert
 
+
 def test_one():
     expected = 1
     actual = convert("I")
 
     assert expected == actual
+
 
 def test_three():
     expected = 3
@@ -12,11 +14,13 @@ def test_three():
 
     assert expected == actual
 
+
 def test_four():
     expected = 4
     actual = convert("IV")
 
     assert expected == actual
+
 
 def test_nineteen():
     expected = 19
@@ -24,11 +28,13 @@ def test_nineteen():
 
     assert expected == actual
 
+
 def test_fournine():
     expected = 49
     actual = convert("XLIX")
 
     assert expected == actual
+
 
 def test_onesevennine():
     expected = 179
@@ -36,11 +42,13 @@ def test_onesevennine():
 
     assert expected == actual
 
+
 def test_twozerosixseven():
     expected = 2067
     actual = convert("MMLXVII")
 
     assert expected == actual
+
 
 def test_threeoneonenine():
     expected = 3119
