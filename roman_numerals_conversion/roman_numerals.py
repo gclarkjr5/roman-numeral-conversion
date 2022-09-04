@@ -70,4 +70,3 @@ def convert(input):
         i += 1
 
     return sum(accumulator)
-  

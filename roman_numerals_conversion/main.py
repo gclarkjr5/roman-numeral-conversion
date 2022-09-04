@@ -10,7 +10,7 @@ from roman_numerals_conversion.roman_numerals import convert
     help="the number to convert (should be a numeral or an integer)",
 )
 def main(input):
-    '''main entry point'''
+    """main entry point"""
     result = convert(input)
     print(result)
 
