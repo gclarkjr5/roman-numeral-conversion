@@ -29,6 +29,9 @@ def numeral_to_int(roman_numeral):
 
 
 def convert(input):
+    """Receives an input like a roman numeral or an arabic
+    number, and converts it to the other
+    """
     # split numeral
     numeral_split = [x for x in input]
 
@@ -55,7 +58,8 @@ def convert(input):
             else:
                 next_number = outputs[i + 1]
 
-                # if the next numeral is bigger, then we subtract the current from the next, then skip ahead
+                # if the next numeral is bigger, then we subtract the current
+                # from the next, then skip ahead
                 if number < next_number:
                     sub_value = next_number - number
                     accumulator.append(sub_value)
@@ -66,7 +70,4 @@ def convert(input):
         i += 1
 
     return sum(accumulator)
-
-
-if __name__ == "__main__":
-    convert()
+  
