@@ -1,3 +1,6 @@
+import sys
+
+
 one = {"roman_numeral": "I", "numeric": 1}
 five = {"roman_numeral": "V", "numeric": 5}
 ten = {"roman_numeral": "X", "numeric": 10}
@@ -114,6 +117,12 @@ def convert_roman_2_int(input):
 
 
 def convert_int_2_roman(integer):
+
+    # raise exception for numbers above 3999
+    # numbers above 3999 use a special syntax that we will
+    # ignore for now
+    if int(integer) > 3999:
+        sys.exit('Numbers above 3999 not allowed')
 
     # divide number to understand amount and remainder
     # start with the highest roman numeral digit and work down

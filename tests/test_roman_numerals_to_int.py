@@ -1,57 +1,29 @@
 from roman_numerals_conversion.roman_numerals import convert_roman_2_int
 
 
-def test_one():
-    expected = 1
-    actual = convert_roman_2_int("I")
+def test_3999():
+    expected = 3999
+    actual = convert_roman_2_int("MMMCMXCIX")
 
     assert expected == actual
 
 
-def test_three():
-    expected = 3
-    actual = convert_roman_2_int("III")
+def test_3444():
+    expected = 3444
+    actual = convert_roman_2_int("MMMCDXLIV")
 
     assert expected == actual
 
 
-def test_four():
-    expected = 4
-    actual = convert_roman_2_int("IV")
+def test_299():
+    expected = 299
+    actual = convert_roman_2_int("CCXCIX")
 
     assert expected == actual
 
 
-def test_nineteen():
-    expected = 19
-    actual = convert_roman_2_int("XIX")
-
-    assert expected == actual
-
-
-def test_fournine():
-    expected = 49
-    actual = convert_roman_2_int("XLIX")
-
-    assert expected == actual
-
-
-def test_onesevennine():
-    expected = 179
-    actual = convert_roman_2_int("CLXXIX")
-
-    assert expected == actual
-
-
-def test_twozerosixseven():
-    expected = 2067
-    actual = convert_roman_2_int("MMLXVII")
-
-    assert expected == actual
-
-
-def test_threeoneonenine():
-    expected = 3119
-    actual = convert_roman_2_int("MMMCXIX")
+def test_44():
+    expected = 44
+    actual = convert_roman_2_int("XLIV")
 
     assert expected == actual
