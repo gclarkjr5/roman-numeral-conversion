@@ -5,9 +5,20 @@ from roman_numerals_conversion.roman_numerals import (
 )
 
 
+# create a main group to create subcommands
 @click.group()
 def main():
     pass
+
+
+# subcommands meant to be:
+# - integer to roman numeral -> int_2_roman
+# - roman numeral to integer -> roman_to_int
+# int_2_roman accepts an integer
+# roman_2_int accepts a roman numeral
+
+
+# TODO: enforce argument type to alert user of bad argument
 
 
 @main.command()
