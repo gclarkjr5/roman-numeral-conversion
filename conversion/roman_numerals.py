@@ -6,6 +6,8 @@ one_hundred = {"roman_numeral": "C", "numeric": 100}
 five_hundred = {"roman_numeral": "D", "numeric": 500}
 thousand = {"roman_numeral": "M", "numeric": 1000}
 
+options = ["roman_numeral", "numeric"]
+
 
 # convert each numeral into its number value
 def numeral_to_int(roman_numeral):
@@ -28,7 +30,28 @@ def numeral_to_int(roman_numeral):
             return "Something wrong!!!"
 
 
-def convert(input):
+# convert each numeral into its number value
+def int_to_numeral(integer):
+    match integer:
+        case 1:
+            return one["roman_numeral"]
+        case 5:
+            return five["roman_numeral"]
+        case 10:
+            return ten["roman_numeral"]
+        case 50:
+            return fifty["roman_numeral"]
+        case 100:
+            return one_hundred["roman_numeral"]
+        case 500:
+            return five_hundred["roman_numeral"]
+        case 1000:
+            return thousand["roman_numeral"]
+        case _:
+            return "Something wrong!!!"
+
+
+def convert_roman_2_int(input):
     """Receives an input like a roman numeral or an arabic
     number, and converts it to the other
     """
@@ -70,3 +93,42 @@ def convert(input):
         i += 1
 
     return sum(accumulator)
+
+
+def convert_int_2_roman(integer):
+
+    # weed out the thousands, the result is the amount of thousands digits
+    thousand = int(integer)//1000
+
+    if thousand >= 1:
+        integer = int(integer) - (1000 * int(thousand))
+
+        # weed out the 500s
+        five_hundred = int(integer)//500
+
+    if five_hundred >= 1:
+        integer = int(integer) - (500 * int(five_hundred))
+
+        one_hundred = int(integer)//100
+
+    if one_hundred >= 1:
+        integer = int(integer) - (100 * int(one_hundred))
+
+        fifty = int(integer)//50
+
+    if fifty >= 1:
+        integer = int(integer) - (50 * int(fifty))
+
+        ten = int(integer)//10
+
+    if ten >= 1:
+        integer = int(integer) - (10 * int(ten))
+
+        five = int(integer)//5
+
+    if five >= 1:
+        integer = int(integer) - (5 * int(five))
+
+    print(thousand, five_hundred, one_hundred, fifty, ten, five, integer)
+
+    return integer
