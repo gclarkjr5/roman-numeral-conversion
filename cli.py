@@ -12,7 +12,6 @@ def main():
 def int_2_roman(integer):
     result = convert_int_2_roman(integer)
     click.echo(f"converting {integer} to its roman numeral -> {result}")
-    # convert_integer(integer)
 
 
 @main.command()

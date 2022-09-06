@@ -115,38 +115,108 @@ def convert_roman_2_int(input):
 
 def convert_int_2_roman(integer):
 
-    # weed out the thousands, the result is the amount of thousands digits
-    thousand = int(integer)//1000
+    # divide number to understand amount and remainder
+    # start with the highest roman numeral digit and work down
+    thousand = 0
+    five_hundred = 0
+    one_hundred = 0
+    fifty = 0
+    ten = 0
+    five = 0
 
-    if thousand >= 1:
-        integer = int(integer) - (1000 * int(thousand))
+    # keep a remainder reference as we progress
+    remainder = int(integer)
 
-        # weed out the 500s
-        five_hundred = int(integer)//500
+    # if atleast 1 thousand
+    if int(remainder)//1000 >= 1:
 
-    if five_hundred >= 1:
-        integer = int(integer) - (500 * int(five_hundred))
+        thousand = int(remainder)//1000
 
-        one_hundred = int(integer)//100
+        # subtract how many thousands from the original number
+        # update the higher level reference remainder
+        remainder = int(remainder) - (1000 * int(thousand))
 
-    if one_hundred >= 1:
-        integer = int(integer) - (100 * int(one_hundred))
+    # next weed out the five_hundreds
+    if int(remainder)//500 >= 1:
 
-        fifty = int(integer)//50
+        five_hundred = int(remainder)//500
 
-    if fifty >= 1:
-        integer = int(integer) - (50 * int(fifty))
+        remainder = int(remainder) - (500 * int(five_hundred))
 
-        ten = int(integer)//10
+    # now the one_hundreds
+    if int(remainder)//100 >= 1:
 
-    if ten >= 1:
-        integer = int(integer) - (10 * int(ten))
+        one_hundred = int(remainder)//100
 
-        five = int(integer)//5
+        remainder = int(remainder) - (100 * int(one_hundred))
 
-    if five >= 1:
-        integer = int(integer) - (5 * int(five))
+    # now 50s
+    if int(remainder)//50 >= 1:
 
-    print(thousand, five_hundred, one_hundred, fifty, ten, five, integer)
+        fifty = int(remainder)//50
 
-    return integer
+        remainder = int(remainder) - (50 * int(fifty))
+
+    if int(remainder)//10 >= 1:
+
+        ten = int(remainder)//10
+
+        remainder = int(remainder) - (10 * int(ten))
+
+    if int(remainder)//5 >= 1:
+
+        five = int(remainder)//5
+
+        remainder = int(remainder) - (5 * int(five))
+
+    # results_list = [
+    #     thousand,
+    #     five_hundred,
+    #     one_hundred,
+    #     fifty,
+    #     ten,
+    #     five,
+    #     remainder
+    # ]
+
+    converted_string = [
+        ''.join([int_to_numeral(1000) for x in range(thousand)]),
+        ''.join([int_to_numeral(500) for x in range(five_hundred)]),
+        ''.join([int_to_numeral(100) for x in range(one_hundred)]),
+        ''.join([int_to_numeral(50) for x in range(fifty)]),
+        ''.join([int_to_numeral(10) for x in range(ten)]),
+        ''.join([int_to_numeral(5) for x in range(five)]),
+        ''.join([int_to_numeral(1) for x in range(remainder)])
+    ]
+
+    # if one_hundred = 4 and five_hundred = 1 or 0 -> CM, CD
+    if (one_hundred == 4) & (five_hundred == 1):
+        converted_string[1] = 'C'
+        converted_string[2] = 'M'
+
+    if (one_hundred == 4) & (five_hundred == 0):
+        converted_string[1] = 'C'
+        converted_string[2] = 'D'
+
+    # if ten = 4 and fifty = 1 or 0 -> XC, XL
+    if (ten == 4) & (fifty == 1):
+        converted_string[3] = 'X'
+        converted_string[4] = 'C'
+
+    if (ten == 4) & (fifty == 0):
+        converted_string[3] = 'X'
+        converted_string[4] = 'L'
+
+    # if remainder = 4 and five = 1 or 0 -> IX, IV
+    if (remainder == 4) & (five == 1):
+        converted_string[5] = 'I'
+        converted_string[6] = 'X'
+
+    if (remainder == 4) & (five == 0):
+        converted_string[5] = 'I'
+        converted_string[6] = 'V'
+
+    # print(converted_string)
+    final_string = ''.join(converted_string)
+
+    return final_string

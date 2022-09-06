@@ -1,4 +1,4 @@
-from roman_numerals_conversion.roman_numerals import convert_roman_2_int, convert_int_2_roman
+from roman_numerals_conversion.roman_numerals import convert_roman_2_int
 
 
 def test_one():
