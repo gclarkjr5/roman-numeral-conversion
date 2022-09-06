@@ -6,8 +6,6 @@ one_hundred = {"roman_numeral": "C", "numeric": 100}
 five_hundred = {"roman_numeral": "D", "numeric": 500}
 thousand = {"roman_numeral": "M", "numeric": 1000}
 
-options = ["roman_numeral", "numeric"]
-
 
 # convert each numeral into its number value
 def numeral_to_int(roman_numeral):
@@ -55,39 +53,59 @@ def convert_roman_2_int(input):
     """Receives an input like a roman numeral or an arabic
     number, and converts it to the other
     """
-    # split numeral
+
+    # split numeral into a list of letters
     numeral_split = [x for x in input]
 
-    # convert each numeral into its integer form
+    # convert each roman numeral into its integer/arabic form
     outputs = [numeral_to_int(x) for x in numeral_split]
 
+    # items used for looping around list of integers
     output_length = len(outputs)
-
     accumulator = []
-
     i = 0
+
     while i < output_length:
+
+        # get the current number
         number = outputs[i]
 
-        # for only one roman numeral
+        # if only one roman numeral is present
         if output_length == 1:
             accumulator.append(number)
         else:
-            # when the numeral is more than 2 digits, we need to look ahead
+            # when roman numeral is larger, we have some special
+            # rules to follow
+            # 1. While reading from left to right, we need to know
+            #    the next number in line
+            # 2. We cannot look ahead of the last digit because there is
+            #    nothing else
+            # 3. If the next number is bigger, we need to subtract the current
+            #    number from the bigger number to get our result
+            # 4. If we have to subtract, then we use up 2 digits, so
+            #    after evaluation, we need to skip to the following digit
+            #    (i.e after next)
+            # 5. If the next number is not bigger, we treat it normally
+            #    by adding it
 
-            # if we are on the last digit, then we cannot look ahead
+            # Rule 2: if we are on the last digit, then we cannot look ahead
             if i + 1 == output_length:
                 accumulator.append(number)
             else:
+
+                # Rule 1: get the next number in the list
                 next_number = outputs[i + 1]
 
-                # if the next numeral is bigger, then we subtract the current
-                # from the next, then skip ahead
+                # Rule 3: when next number is bigger, subtract current from it
                 if number < next_number:
                     sub_value = next_number - number
                     accumulator.append(sub_value)
+
+                    # Rule 4: due to subtraction, we need to skip a digit
                     i += 1
-                else:  # everything else is business as usual
+
+                # Rule 5: when next is not bigger, add it normally
+                else:
                     accumulator.append(number)
 
         i += 1
