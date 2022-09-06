@@ -128,95 +128,94 @@ def convert_int_2_roman(integer):
     remainder = int(integer)
 
     # if atleast 1 thousand
-    if int(remainder)//1000 >= 1:
+    if int(remainder) // 1000 >= 1:
 
-        thousand = int(remainder)//1000
+        thousand = int(remainder) // 1000
 
         # subtract how many thousands from the original number
         # update the higher level reference remainder
         remainder = int(remainder) - (1000 * int(thousand))
 
     # next weed out the five_hundreds
-    if int(remainder)//500 >= 1:
+    if int(remainder) // 500 >= 1:
 
-        five_hundred = int(remainder)//500
+        five_hundred = int(remainder) // 500
 
         remainder = int(remainder) - (500 * int(five_hundred))
 
     # now the one_hundreds
-    if int(remainder)//100 >= 1:
+    if int(remainder) // 100 >= 1:
 
-        one_hundred = int(remainder)//100
+        one_hundred = int(remainder) // 100
 
         remainder = int(remainder) - (100 * int(one_hundred))
 
     # now 50s
-    if int(remainder)//50 >= 1:
+    if int(remainder) // 50 >= 1:
 
-        fifty = int(remainder)//50
+        fifty = int(remainder) // 50
 
         remainder = int(remainder) - (50 * int(fifty))
 
-    if int(remainder)//10 >= 1:
+    if int(remainder) // 10 >= 1:
 
-        ten = int(remainder)//10
+        ten = int(remainder) // 10
 
         remainder = int(remainder) - (10 * int(ten))
 
-    if int(remainder)//5 >= 1:
+    if int(remainder) // 5 >= 1:
 
-        five = int(remainder)//5
+        five = int(remainder) // 5
 
         remainder = int(remainder) - (5 * int(five))
 
-    # results_list = [
-    #     thousand,
-    #     five_hundred,
-    #     one_hundred,
-    #     fifty,
-    #     ten,
-    #     five,
-    #     remainder
-    # ]
-
+    # create concatenated strings of the individual roman numerals
+    # i.e ['MM', 'D', '', 'L', 'XX', 'V', 'III']
     converted_string = [
-        ''.join([int_to_numeral(1000) for x in range(thousand)]),
-        ''.join([int_to_numeral(500) for x in range(five_hundred)]),
-        ''.join([int_to_numeral(100) for x in range(one_hundred)]),
-        ''.join([int_to_numeral(50) for x in range(fifty)]),
-        ''.join([int_to_numeral(10) for x in range(ten)]),
-        ''.join([int_to_numeral(5) for x in range(five)]),
-        ''.join([int_to_numeral(1) for x in range(remainder)])
+        "".join([int_to_numeral(1000) for x in range(thousand)]),
+        "".join([int_to_numeral(500) for x in range(five_hundred)]),
+        "".join([int_to_numeral(100) for x in range(one_hundred)]),
+        "".join([int_to_numeral(50) for x in range(fifty)]),
+        "".join([int_to_numeral(10) for x in range(ten)]),
+        "".join([int_to_numeral(5) for x in range(five)]),
+        "".join([int_to_numeral(1) for x in range(remainder)]),
     ]
 
-    # if one_hundred = 4 and five_hundred = 1 or 0 -> CM, CD
+    # Rule: You cannot have more than 3 consecuitve of the same roman numeral
+    # i.e: 3 == III, but 4 == IV and NOT IIII
+    # another example: 8 == VIII, but 9 == IX and not VIIII
+    # this behavior seems to only happen if a digit is a 4 or a 9
+    # in the hundreds, tens, or ones digits
+    # the below is meant to handle this
+
+    # if one_hundred occurs 4x and five_hundred 1x or 0x -> CM or CD
     if (one_hundred == 4) & (five_hundred == 1):
-        converted_string[1] = 'C'
-        converted_string[2] = 'M'
+        converted_string[1] = "C"
+        converted_string[2] = "M"
 
     if (one_hundred == 4) & (five_hundred == 0):
-        converted_string[1] = 'C'
-        converted_string[2] = 'D'
+        converted_string[1] = "C"
+        converted_string[2] = "D"
 
-    # if ten = 4 and fifty = 1 or 0 -> XC, XL
+    # if ten occurs 4x and fifty 1x or 0x -> XC or XL
     if (ten == 4) & (fifty == 1):
-        converted_string[3] = 'X'
-        converted_string[4] = 'C'
+        converted_string[3] = "X"
+        converted_string[4] = "C"
 
     if (ten == 4) & (fifty == 0):
-        converted_string[3] = 'X'
-        converted_string[4] = 'L'
+        converted_string[3] = "X"
+        converted_string[4] = "L"
 
-    # if remainder = 4 and five = 1 or 0 -> IX, IV
+    # if remainder occurs 4x and five 1x or 0x -> IX or IV
     if (remainder == 4) & (five == 1):
-        converted_string[5] = 'I'
-        converted_string[6] = 'X'
+        converted_string[5] = "I"
+        converted_string[6] = "X"
 
     if (remainder == 4) & (five == 0):
-        converted_string[5] = 'I'
-        converted_string[6] = 'V'
+        converted_string[5] = "I"
+        converted_string[6] = "V"
 
     # print(converted_string)
-    final_string = ''.join(converted_string)
+    final_string = "".join(converted_string)
 
     return final_string
