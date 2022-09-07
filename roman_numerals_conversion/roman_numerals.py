@@ -1,77 +1,39 @@
-import sys
+from roman_numerals_conversion.conversions import CONVERSIONS
 
 
-one = {"roman_numeral": "I", "numeric": 1}
-five = {"roman_numeral": "V", "numeric": 5}
-ten = {"roman_numeral": "X", "numeric": 10}
-fifty = {"roman_numeral": "L", "numeric": 50}
-one_hundred = {"roman_numeral": "C", "numeric": 100}
-five_hundred = {"roman_numeral": "D", "numeric": 500}
-thousand = {"roman_numeral": "M", "numeric": 1000}
+def get_key_from_value(value):
+    list_of_keys = list(CONVERSIONS.keys())
+    list_of_values = list(CONVERSIONS.values())
+    value_index = list_of_values.index(value)
+
+    return list_of_keys[value_index]
 
 
-# convert each numeral into its number value
-def numeral_to_int(roman_numeral):
-    match roman_numeral:
-        case "I":
-            return one["numeric"]
-        case "V":
-            return five["numeric"]
-        case "X":
-            return ten["numeric"]
-        case "L":
-            return fifty["numeric"]
-        case "C":
-            return one_hundred["numeric"]
-        case "D":
-            return five_hundred["numeric"]
-        case "M":
-            return thousand["numeric"]
-        case _:
-            return "Something wrong!!!"
+def create_roman_numeral_string(integer, digit):
+    roman_numeral_list = [get_key_from_value(integer) for x in range(digit)]
+    return "".join(roman_numeral_list)
 
 
-# convert each numeral into its number value
-def int_to_numeral(integer):
-    match integer:
-        case 1:
-            return one["roman_numeral"]
-        case 5:
-            return five["roman_numeral"]
-        case 10:
-            return ten["roman_numeral"]
-        case 50:
-            return fifty["roman_numeral"]
-        case 100:
-            return one_hundred["roman_numeral"]
-        case 500:
-            return five_hundred["roman_numeral"]
-        case 1000:
-            return thousand["roman_numeral"]
-        case _:
-            return "Something wrong!!!"
-
-
-def convert_roman_2_int(input):
+def convert_roman_2_int(roman_numeral):
     """Receives an input like a roman numeral or an arabic
-    number, and converts it to the other
+    number (integer), and converts it to the other
     """
 
     # split numeral into a list of letters
-    numeral_split = [x for x in input]
+    numeral_split = [x for x in roman_numeral]
 
     # convert each roman numeral into its integer/arabic form
-    outputs = [numeral_to_int(x) for x in numeral_split]
+    integer_split = [CONVERSIONS[x] for x in numeral_split]
 
-    # items used for looping around list of integers
-    output_length = len(outputs)
+    # # items used for looping around list of integers
+    output_length = len(integer_split)
     accumulator = []
     i = 0
 
     while i < output_length:
 
         # get the current number
-        number = outputs[i]
+        number = integer_split[i]
 
         # if only one roman numeral is present
         if output_length == 1:
@@ -97,7 +59,7 @@ def convert_roman_2_int(input):
             else:
 
                 # Rule 1: get the next number in the list
-                next_number = outputs[i + 1]
+                next_number = integer_split[i + 1]
 
                 # Rule 3: when next number is bigger, subtract current from it
                 if number < next_number:
@@ -116,17 +78,19 @@ def convert_roman_2_int(input):
     return sum(accumulator)
 
 
-def convert_int_2_roman(integer):
+def convert_int_2_roman(intg):
+
+    integer = int(intg)
 
     # raise exception for numbers above 3999 or below 1
     # numbers above 3999 use a special syntax that we will
     # ignore for now
-    if int(integer) > 3999:
-        raise ValueError('Numbdes above 3999 not allowed')
+    if integer > 3999:
+        raise ValueError("Numbdes above 3999 not allowed")
         # raisys.exit('Numbers above 3999 not allowed')
 
-    if int(integer) < 1:
-        raise ValueError('Numbdes below 1 not allowed')
+    if integer < 1:
+        raise ValueError("Numbdes below 1 not allowed")
 
     # divide number to understand amount and remainder
     # start with the highest roman numeral digit and work down
@@ -138,61 +102,63 @@ def convert_int_2_roman(integer):
     five = 0
 
     # keep a remainder reference as we progress
-    remainder = int(integer)
+    remainder = integer
 
     # if atleast 1 thousand
-    if int(remainder) // 1000 >= 1:
+    if remainder // 1000 >= 1:
 
-        thousand = int(remainder) // 1000
+        thousand = remainder // 1000
 
         # subtract how many thousands from the original number
         # update the higher level reference remainder
-        remainder = int(remainder) - (1000 * int(thousand))
+        remainder = remainder - (1000 * int(thousand))
 
     # next weed out the five_hundreds
-    if int(remainder) // 500 >= 1:
+    if remainder // 500 >= 1:
 
-        five_hundred = int(remainder) // 500
+        five_hundred = remainder // 500
 
-        remainder = int(remainder) - (500 * int(five_hundred))
+        remainder = remainder - (500 * int(five_hundred))
 
     # now the one_hundreds
-    if int(remainder) // 100 >= 1:
+    if remainder // 100 >= 1:
 
-        one_hundred = int(remainder) // 100
+        one_hundred = remainder // 100
 
-        remainder = int(remainder) - (100 * int(one_hundred))
+        remainder = remainder - (100 * int(one_hundred))
 
     # now 50s
-    if int(remainder) // 50 >= 1:
+    if remainder // 50 >= 1:
 
-        fifty = int(remainder) // 50
+        fifty = remainder // 50
 
-        remainder = int(remainder) - (50 * int(fifty))
+        remainder = remainder - (50 * int(fifty))
 
-    if int(remainder) // 10 >= 1:
+    if remainder // 10 >= 1:
 
-        ten = int(remainder) // 10
+        ten = remainder // 10
 
-        remainder = int(remainder) - (10 * int(ten))
+        remainder = remainder - (10 * int(ten))
 
-    if int(remainder) // 5 >= 1:
+    if remainder // 5 >= 1:
 
-        five = int(remainder) // 5
+        five = remainder // 5
 
-        remainder = int(remainder) - (5 * int(five))
+        remainder = remainder - (5 * int(five))
 
     # create concatenated strings of the individual roman numerals
     # i.e ['MM', 'D', '', 'L', 'XX', 'V', 'III']
-    converted_string = [
-        "".join([int_to_numeral(1000) for x in range(thousand)]),
-        "".join([int_to_numeral(500) for x in range(five_hundred)]),
-        "".join([int_to_numeral(100) for x in range(one_hundred)]),
-        "".join([int_to_numeral(50) for x in range(fifty)]),
-        "".join([int_to_numeral(10) for x in range(ten)]),
-        "".join([int_to_numeral(5) for x in range(five)]),
-        "".join([int_to_numeral(1) for x in range(remainder)]),
+    i_list = [
+        (CONVERSIONS["M"], thousand),
+        (CONVERSIONS["D"], five_hundred),
+        (CONVERSIONS["C"], one_hundred),
+        (CONVERSIONS["L"], fifty),
+        (CONVERSIONS["X"], ten),
+        (CONVERSIONS["V"], five),
+        (CONVERSIONS["I"], remainder),
     ]
+
+    converted_string = [create_roman_numeral_string(x, y) for x, y in i_list]
 
     # Rule: You cannot have more than 3 consecuitve of the same roman numeral
     # i.e: 3 == III, but 4 == IV and NOT IIII

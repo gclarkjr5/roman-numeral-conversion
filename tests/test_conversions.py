@@ -1,5 +1,8 @@
 import pytest
-from roman_numerals_conversion.roman_numerals import convert_int_2_roman, convert_roman_2_int
+from roman_numerals_conversion.roman_numerals import (
+    convert_int_2_roman,
+    convert_roman_2_int,
+)
 
 test_fixtures = [
     (1, "I"),
@@ -27,6 +30,7 @@ test_fixtures = [
     (3999, "MMMCMXCIX"),
 ]
 
+
 @pytest.mark.parametrize("number, roman", test_fixtures)
 def test_numeral_to_roman(number, roman):
     assert convert_int_2_roman(number) == roman
@@ -41,4 +45,3 @@ def test_roman_to_number(number, roman):
 def test_numeral_to_roman_unhappy(number):
     with pytest.raises(ValueError):
         convert_int_2_roman(number)
-
