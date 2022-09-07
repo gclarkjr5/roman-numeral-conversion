@@ -118,11 +118,15 @@ def convert_roman_2_int(input):
 
 def convert_int_2_roman(integer):
 
-    # raise exception for numbers above 3999
+    # raise exception for numbers above 3999 or below 1
     # numbers above 3999 use a special syntax that we will
     # ignore for now
     if int(integer) > 3999:
-        sys.exit('Numbers above 3999 not allowed')
+        raise ValueError('Numbdes above 3999 not allowed')
+        # raisys.exit('Numbers above 3999 not allowed')
+
+    if int(integer) < 1:
+        raise ValueError('Numbdes below 1 not allowed')
 
     # divide number to understand amount and remainder
     # start with the highest roman numeral digit and work down
